@@ -1,3 +1,5 @@
-The folder named "FullSystem" contains the entire Libero project structure. To open the project, ensure Libero v11.9 is installed on your machine and open the file named "FullSystem.prjx". Follow the steps outlined in the verification and validation section of the detailed design document for instructions on using the Libero tools to build the project and flash the FPGA.
+The folder named "FullSystem" contains the entire Libero project structure. The zip file of the same name is the archived project.
+
+To open the project, ensure Libero v11.9 is installed on your machine and open the file named "FullSystem.prjx". Follow the steps outlined in the verification and validation section of the detailed design document for instructions on using the Libero tools to build the project and flash the FPGA.
 
 All HDL source code, GUI source code, and additional scripts for sending and test data can be found in the complete project source code file.

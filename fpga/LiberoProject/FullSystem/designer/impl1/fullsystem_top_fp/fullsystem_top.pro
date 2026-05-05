@@ -1,6 +1,6 @@
 <project name="fullsystem_top" version="1.1">
     <ProjectDirectory>
-        C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\designer\impl1\fullsystem_top_fp
+        C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\designer\impl1\fullsystem_top_fp
     </ProjectDirectory>
     <View>
         SingleSTAPLView
@@ -9,7 +9,7 @@
         
     </LiberoTargetDevice>
     <LogFile>
-        C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\designer\impl1\fullsystem_top_fp\fullsystem_top.log
+        C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\designer\impl1\fullsystem_top_fp\fullsystem_top.log
     </LogFile>
     <SerializationOption>
         Skip
@@ -74,7 +74,7 @@
         </Hardware>
         <Algo type="PDB">
             <filename>
-                C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\designer\impl1\fullsystem_top.pdb
+                C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\designer\impl1\fullsystem_top.pdb
             </filename>
             <local>
                 projectData\fullsystem_top.pdb

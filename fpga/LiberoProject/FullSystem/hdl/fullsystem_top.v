@@ -3,24 +3,8 @@
 // File: fullsystem_top.v
 //
 // Description:
-//   Top-level integration for the entire detector readout system. Replaces
-//   the earlier input-only top (input_top.v) by adding the host UART link,
-//   parameter configuration FSM, pattern generator, source mux, bridge FSM,
-//   and timestamp generator.
-//
-//   Three external UART pins:
-//     i_uart_data_rx -> packet_parser -> event_buffer -> dsp_pipeline
-//                                                              |
-//                                                              v
-//     i_uart_host_rx -> host_uart RX -> uart_config_fsm  -> dsp params,
-//                                                           sel, start_stop,
-//                                                           and timestamp seed
-//                                                              |
-//                                                              v
-//                                          mux (sel) <- pattern_generator
-//                                                  |
-//                                                  v
-//                                          bridge_fsm -> host_uart TX -> o_uart_host_tx
+//   Top-level integration for the entire detector readout system. Refer
+//   to the detailed design document for a high level visual overview.
 //
 //   Acquisition is gated by start_stop: it enables both the event_buffer
 //   replay (acquire input) and the pattern generator (enable input). Whichever

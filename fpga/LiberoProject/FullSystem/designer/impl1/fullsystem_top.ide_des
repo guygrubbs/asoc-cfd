@@ -20,9 +20,9 @@ KEY IDE_DES_BLOCK_PUBLISH "FALSE"
 KEY IDE_DES_BA_EXPORTED "TRUE"
 KEY IDE_DES_INTERACTIVE "TRUE"
 KEY IDE_DES_ERROR_FOUND "FALSE"
-KEY IDE_DES_ADB_PATH "C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\designer\impl1\fullsystem_top.adb"
+KEY IDE_DES_ADB_PATH "C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\designer\impl1\fullsystem_top.adb"
 LIST SOURCE_FILES
-VALUE "C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\synthesis\fullsystem_top.edn;edn"
+VALUE "C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\synthesis\fullsystem_top.edn;edn"
 ENDLIST
 LIST OPTIONAL_FILES
 ENDLIST

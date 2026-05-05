@@ -47,29 +47,34 @@ TIME="1777758360"
 SIZE="236"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top.adb,adb"
-STATE="utd"
-TIME="1777841214"
-SIZE="13667840"
+STATE="ood"
+TIME="1778019835"
+SIZE="20978176"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top.ide_des,ide_des"
 STATE="utd"
-TIME="1777841217"
-SIZE="1044"
+TIME="1778019838"
+SIZE="1096"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top.pdb,pdb"
 STATE="ood"
-TIME="1777759530"
-SIZE="665318"
+TIME="1778019697"
+SIZE="665390"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_ba.sdf,ba_sdf"
 STATE="ood"
-TIME="1777759494"
+TIME="1778019829"
 SIZE="13543940"
+ENDFILE
+VALUE "<project>\designer\impl1\fullsystem_top_ba.v,ba_hdl"
+STATE="ood"
+TIME="1778019828"
+SIZE="7143588"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_compile_log.rpt,log"
 STATE="utd"
-TIME="1777758689"
-SIZE="22322"
+TIME="1778019179"
+SIZE="22170"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_fp\fullsystem_top.pro,pro"
 STATE="utd"
@@ -123,8 +128,8 @@ SIZE="11692"
 ENDFILE
 VALUE "<project>\hdl\fullsystem_top.v,hdl"
 STATE="utd"
-TIME="1777921719"
-SIZE="14712"
+TIME="1778018544"
+SIZE="13709"
 ENDFILE
 VALUE "<project>\hdl\host_uart.v,hdl"
 STATE="utd"
@@ -213,49 +218,29 @@ PARENT="<project>\smartgen\mult_16x14_3p\mult_16x14_3p.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top.edn,syn_edn"
-STATE="utd"
-TIME="1777758661"
+STATE="ood"
+TIME="1778018615"
 SIZE="10108126"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top.so,so"
 STATE="utd"
-TIME="1777758661"
-SIZE="264"
+TIME="1778018615"
+SIZE="290"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top_sdc.sdc,syn_sdc"
-STATE="utd"
-TIME="1777758660"
+STATE="ood"
+TIME="1778018614"
 SIZE="407"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top_syn.prj,prj"
 STATE="utd"
-TIME="1777992650"
-SIZE="4693"
+TIME="1778018616"
+SIZE="4699"
 ENDFILE
 ENDLIST
 LIST UsedFile
 ENDLIST
 LIST NewModulesInfo
-LIST "fullsystem_top::work"
-FILE "<project>\hdl\fullsystem_top.v,hdl"
-LIST ProjectState5.1
-LIST Impl1
-LiberoState=Post_Synthesis
-ideSYNTHESIS(<project>\synthesis\fullsystem_top.edn,syn_edn)=StateSuccess
-LIST FlowOptions
-UsePhySynth=FALSE
-UseSynth=TRUE
-UseFhbAutoInst=FALSE
-ENDLIST
-Used_File_List
-ENDUsed_File_List
-ENDLIST
-ENDLIST
-LIST PinReports
-VALUE "<project>\designer\impl1\fullsystem_top_report_pin_byname.txt,log"
-VALUE "<project>\designer\impl1\fullsystem_top_report_pin_bynumber.txt,log"
-ENDLIST
-ENDLIST
 ENDLIST
 LIST AssociatedStimulus
 ENDLIST
@@ -327,8 +312,8 @@ NAME="Synplify Pro ME"
 FUNCTION="Synthesis"
 TOOL="Synplify Pro ME"
 LOCATION="C:\Microsemi\Libero_SoC_v11.9\SynplifyPro\bin\synplify_pro.exe"
-PARAM="-licensetype synplifypro_actel -batch -log synplify.log"
-BATCH=1
+PARAM=""
+BATCH=0
 LICENSE=""
 IS32BIT="1"
 EndProfile
@@ -361,19 +346,6 @@ IS32BIT="1"
 EndProfile
 ENDLIST
 LIST ProjectState5.1
-LIST "fullsystem_top::work"
-LIST Impl1
-LiberoState=Post_Synthesis
-ideSYNTHESIS(<project>\synthesis\fullsystem_top.edn,syn_edn)=StateSuccess
-LIST FlowOptions
-UsePhySynth=FALSE
-UseSynth=TRUE
-UseFhbAutoInst=FALSE
-ENDLIST
-Used_File_List
-ENDUsed_File_List
-ENDLIST
-ENDLIST
 ENDLIST
 LIST ExcludePackageForSimulation
 ENDLIST
@@ -389,28 +361,9 @@ LIST OpenedFileList
 ORIENTATION;HORIZONTAL
 Reports;Reports;0
 ReportsCurrentItem;Compile:fullsystem_top_compile_log.rpt
-HDL;hdl\bridge_fsm.v;0
-HDL;hdl\cfd_delay_line_ram.v;0
-HDL;hdl\serial_frac_div.v;0
-HDL;hdl\cfd_channel_frontend.v;0
-HDL;hdl\position_calculator.v;0
-HDL;hdl\peak_detector_4ch.v;0
-HDL;hdl\event_builder.v;0
-HDL;hdl\cfd_4ch.v;0
-HDL;hdl\adc_preprocess_4ch.v;0
-HDL;hdl\dsp_pipeline.v;0
-HDL;hdl\event_buffer.v;0
-HDL;hdl\host_uart.v;0
-HDL;hdl\uart_tx.v;0
-HDL;hdl\mux_gain_test.v;0
-HDL;hdl\pulse_extender.v;0
-HDL;hdl\uart_config_fsm.v;0
 HDL;hdl\fullsystem_top.v;0
-HDL;hdl\uart_packet_parser.v;0
-HDL;hdl\uart_rx.v;0
-HDL;hdl\pattern_generator.v;0
-HDL;hdl\timestamp_generator.v;0
-ACTIVEVIEW;Reports
+StartPage;StartPage;0
+ACTIVEVIEW;StartPage
 ENDLIST
 LIST ModuleSubBlockList
 LIST "adc_preprocess_4ch::work","hdl\adc_preprocess_4ch.v","FALSE","FALSE"
@@ -445,11 +398,11 @@ SUBBLOCK "event_buffer::work","hdl\event_buffer.v","FALSE","FALSE"
 SUBBLOCK "host_uart::work","hdl\host_uart.v","FALSE","FALSE"
 SUBBLOCK "mux_gain_test::work","hdl\mux_gain_test.v","FALSE","FALSE"
 SUBBLOCK "pattern_generator::work","hdl\pattern_generator.v","FALSE","FALSE"
-SUBBLOCK "uart_rx::work","hdl\uart_rx.v","FALSE","FALSE"
-SUBBLOCK "timestamp_generator::work","hdl\timestamp_generator.v","FALSE","FALSE"
 SUBBLOCK "pulse_extender::work","hdl\pulse_extender.v","FALSE","FALSE"
+SUBBLOCK "timestamp_generator::work","hdl\timestamp_generator.v","FALSE","FALSE"
 SUBBLOCK "uart_config_fsm::work","hdl\uart_config_fsm.v","FALSE","FALSE"
 SUBBLOCK "uart_packet_parser::work","hdl\uart_packet_parser.v","FALSE","FALSE"
+SUBBLOCK "uart_rx::work","hdl\uart_rx.v","FALSE","FALSE"
 ENDLIST
 LIST "host_uart::work","hdl\host_uart.v","FALSE","FALSE"
 SUBBLOCK "uart_rx::work","hdl\uart_rx.v","FALSE","FALSE"

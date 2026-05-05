@@ -1,13 +1,13 @@
 ***************************************************************************
                                Status Report
-                          Sat May 02 17:51:26 2026 ***************************************************************************
+                          Tue May 05 18:12:55 2026 ***************************************************************************
 
 Product: Designer
 Release: v11.9 SP6
 Version: 11.9.6.7
-File Name: C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\designer\impl1\fullsystem_top.adb
+File Name: C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\designer\impl1\fullsystem_top.adb
 Design Name: fullsystem_top  Design State: compile
-Last Saved: Sat May 02 17:51:13 2026
+Last Saved: Tue May 05 13:10:07 2026
 
 ***** Device Data **************************************************
 
@@ -22,8 +22,8 @@ Voltage Range:   COM
 
 ***** Import Variables *********************************************
 
-Source File(s) Imported on Sat May 02 17:51:10 2026:
-        C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\synthesis\fullsystem_top.edn
+Source File(s) Imported on Tue May 05 18:12:35 2026:
+        C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\synthesis\fullsystem_top.edn
 
 
 ***** CAE Variables ************************************************
@@ -50,14 +50,15 @@ Family      : ProASIC3E
 Device      : A3PE1500
 Package     : 208 PQFP
 Source      :
-C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\synthesis\fullsystem_top.edn
+C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\sy\
+nthesis\fullsystem_top.edn
 Format      : EDIF
 Topcell     : fullsystem_top
 Speed grade : STD
 Temp        : 0:25:70
 Voltage     : 1.58:1.50:1.42
 
-Keep Existing Physical Constraints : No
+Keep Existing Physical Constraints : Yes
 Keep Existing Timing Constraints   : Yes
 
 pdc_abort_on_error                 : Yes
@@ -271,6 +272,13 @@ Warning: CMP503: Remapped 4342 enable flip-flop(s) to a 2-tile implementation be
 
 There were 0 error(s) and 177 warning(s) in this design.
 =====================================================================
+
+Reading previous post-compile physical placement constraints.
+
+
+There were 0 error(s) and 0 warning(s).
+
+=====================================================================
 Compile report:
 ===============
 
@@ -322,9 +330,9 @@ I/O Technology:
 
 I/O Placement:
 
-    Locked  :   0
+    Locked  :  13 ( 100.00% )
     Placed  :   0
-    UnPlaced:  13 ( 100.00% )
+    UnPlaced:   0
 
 Net information report:
 =======================

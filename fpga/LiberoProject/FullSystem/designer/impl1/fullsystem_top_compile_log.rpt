@@ -2,36 +2,25 @@ Microsemi Libero Software
 Version: 11.9.6.7
 Release: v11.9 SP6
 
-Created a new design.
+Info: The design fullsystem_top.adb was last modified by software version 11.9.6.7.
+Opened an existing Libero design fullsystem_top.adb.
 'BA_NAME' set to 'fullsystem_top_ba'
 'IDE_DESIGNERVIEW_NAME' set to 'Impl1'
 'IDE_DESIGNERVIEW_COUNT' set to '1'
 'IDE_DESIGNERVIEW_REV0' set to 'Impl1'
 'IDE_DESIGNERVIEW_REVNUM0' set to '1'
 'IDE_DESIGNERVIEW_ROOTDIR' set to
-'C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\designer'
+'C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\d\
+esigner'
 'IDE_DESIGNERVIEW_LASTREV' set to '1'
-'DESDIR' set to
-'C:/Users/aamar/Documents/SeniorSem2/4806-MDE/FullSystem/FullSystem/designer/impl1'
-'BA_DIR' set to
-'C:/Users/aamar/Documents/SeniorSem2/4806-MDE/FullSystem/FullSystem/designer/impl1'
-'BA_NETLIST_ALSO' set to '1'
-'EDNINFLAVOR' set to 'GENERIC'
-'NETLIST_NAMING_STYLE' set to 'VERILOG'
-'EXPORT_STATUS_REPORT' set to '1'
-'EXPORT_STATUS_REPORT_FILENAME' set to 'fullsystem_top.rpt'
-'AUDIT_NETLIST_FILE' set to '1'
-'AUDIT_DCF_FILE' set to '1'
-'AUDIT_PIN_FILE' set to '1'
-'AUDIT_ADL_FILE' set to '1'
 
- Netlist Reading Time = 1.0 seconds
+ Netlist Reading Time = 0.0 seconds
 Imported the file:
 
-C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\synthesis\fullsystem_top.edn
+C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\sy\
+nthesis\fullsystem_top.edn
 
-The Import command succeeded ( 00:00:02 )
-Design saved to file fullsystem_top.adb.
+The Import command succeeded ( 00:00:07 )
 =====================================================================
 Parameters used to run compile:
 ===============================
@@ -40,14 +29,15 @@ Family      : ProASIC3E
 Device      : A3PE1500
 Package     : 208 PQFP
 Source      :
-C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\synthesis\fullsystem_top.edn
+C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\sy\
+nthesis\fullsystem_top.edn
 Format      : EDIF
 Topcell     : fullsystem_top
 Speed grade : STD
 Temp        : 0:25:70
 Voltage     : 1.58:1.50:1.42
 
-Keep Existing Physical Constraints : No
+Keep Existing Physical Constraints : Yes
 Keep Existing Timing Constraints   : Yes
 
 pdc_abort_on_error                 : Yes
@@ -261,6 +251,13 @@ Warning: CMP503: Remapped 4342 enable flip-flop(s) to a 2-tile implementation be
 
 There were 0 error(s) and 177 warning(s) in this design.
 =====================================================================
+
+Reading previous post-compile physical placement constraints.
+
+
+There were 0 error(s) and 0 warning(s).
+
+=====================================================================
 Compile report:
 ===============
 
@@ -312,9 +309,9 @@ I/O Technology:
 
 I/O Placement:
 
-    Locked  :   0
+    Locked  :  13 ( 100.00% )
     Placed  :   0
-    UnPlaced:  13 ( 100.00% )
+    UnPlaced:   0
 
 Net information report:
 =======================
@@ -413,7 +410,7 @@ Nets that are candidates for clock assignment and the resulting fanout:
     34      INT_NET       Net   : u_dsp_pipeline/u_cfd/fe_y1/att_reg[9]
                           Driver: u_dsp_pipeline/u_cfd/fe_y1/att_reg[9]/U1
 
-The Compile command succeeded ( 00:00:13 )
+The Compile command succeeded ( 00:00:12 )
 Wrote status report to file: fullsystem_top_compile_report.txt
 
 The Report command succeeded ( 00:00:00 )
@@ -424,9 +421,9 @@ Wrote pin report to file: fullsystem_top_report_pin_bynumber.txt
 
 The Report command succeeded ( 00:00:00 )
 Design saved to file
-C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem\FullSystem\designer\impl1\fullsystem_to\
-p.adb.
+C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem\de\
+signer\impl1\fullsystem_top.adb.
 
-The Execute Script command succeeded ( 00:00:22 )
+The Execute Script command succeeded ( 00:00:24 )
 Design closed.
 
