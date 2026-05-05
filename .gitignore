@@ -1,0 +1,45 @@
+# Libero project generated folders
+designer/
+impl*/
+component/
+stimulus/
+simulation/
+synthesis/
+
+# Logs and reports
+*.log
+*.rpt
+*.txt
+*.jou
+
+# Generated project files / metadata
+*.adb
+*.adb.*
+*.idb
+*.pdb
+*.stp
+*.srr
+*.srs
+*.prj.bak
+*.bak
+
+# Temporary / cache files
+*.tmp
+*.temp
+*.cache
+*.crash
+
+# Programming / export outputs
+*.bit
+*.dat
+*.hex
+*.mcs
+*.job
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor junk
+.vscode/
+*.swp
