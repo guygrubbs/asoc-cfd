@@ -14,7 +14,9 @@ import ipaddress
 import serial.tools.list_ports as serialPorts
 import pyqtgraph as pg
 
-
+# This class handles setting up all of the GUI including the formatting of the widgets 
+# and deploying the threaded architecture. It also is responsible for wiring the signals
+# between widgets and ensuring proper inter-thread communication
 class EtherDAQMock(QtWidgets.QMainWindow):
 
     def __init__(self):
@@ -96,6 +98,8 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.portTimer.timeout.connect(self.updatePorts)
         self.portTimer.start(1000)
      
+
+    # This function gets the available COM ports and updates them in the GUI 
     def updatePorts(self):
         currentPorts = [p.device for p in serialPorts.comports()]
         if currentPorts != self.ports:
@@ -110,13 +114,15 @@ class EtherDAQMock(QtWidgets.QMainWindow):
             self.comPort.blockSignals(False)
             self.ports = currentPorts
 
+    # This function handles formatting and wiring the main tab, which includes
+    # the graphical displays, output file settings, and mode of operation
     def initTab1(self):
         # creates the layout (left column and right column)
         root = QtWidgets.QHBoxLayout(self.tab1)
         root.setContentsMargins(12, 6, 12, 6)
         root.setSpacing(12)
 
-        # ===== Left column: Controls & PHD =====
+        # Left column: Controls, PHD, and running event rate
         leftCol = QtWidgets.QVBoxLayout()
         leftCol.setSpacing(12)
 
@@ -186,7 +192,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
 
         leftCol.addStretch(1)
 
-        # ===== Right column: Main Image & controls =====
+        # Right Column: the xy hitmap
         rightCol = QtWidgets.QVBoxLayout()
         rightCol.setSpacing(8)
 
@@ -205,6 +211,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         root.addLayout(leftCol, 0)
         root.addLayout(rightCol, 1)
 
+    # This function sets up the parameters tab
     def initTab2(self):
         root = QtWidgets.QHBoxLayout(self.tab2)
         root.setContentsMargins(12, 6, 12, 6)
@@ -213,7 +220,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         leftCol = QtWidgets.QVBoxLayout()
         leftCol.setSpacing(12)
         
-        # Create the box for networking parameters
+        # Create the box for UART parameters
         netBox = QtWidgets.QGroupBox("Connectivity Parameters")
         netLay = QtWidgets.QGridLayout(netBox)
         netLay.setContentsMargins(10, 8, 10, 8)
@@ -223,8 +230,6 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.comPort.addItems(["None"])
         self.comPort.setFixedWidth(100)
         self.comPort.addItems(self.ports)
-        # self.comPort = QtWidgets.QLineEdit("COM3")
-        # self.comPort.setFixedWidth(100)
         self.baudRate = QtWidgets.QLineEdit("921600")
         self.baudRate.setFixedWidth(100)
         netLay.addWidget(QtWidgets.QLabel("COM Port:"), 0, 0)
@@ -269,7 +274,6 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         detLay.setContentsMargins(10, 8, 10, 8)
         detLay.setHorizontalSpacing(10)
         detLay.setVerticalSpacing(8)
-
         self.detX = QtWidgets.QLineEdit("102")
         self.detX.setFixedWidth(100)
         self.detY = QtWidgets.QLineEdit("102")
@@ -289,7 +293,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         detBox.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         leftCol.addWidget(detBox)
 
-        
+        # create the box for graphical image size
         sizeBox = QtWidgets.QGroupBox("Image Size")
         sizeLay = QtWidgets.QGridLayout(sizeBox)
         sizeLay.setContentsMargins(10, 8, 10, 8)
@@ -306,6 +310,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         sizeLay.addWidget(self.ySize, 1, 1)
         leftCol.addWidget(sizeBox)
 
+        # create the set parameters button to save the paramters
         self.ParamsBtn = QtWidgets.QPushButton("Set Parameters")
         self.ParamsBtn.setFixedWidth(200)
         leftCol.addWidget(self.ParamsBtn)
@@ -320,6 +325,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
             except ValueError:
                 return default
         
+        # pull all the parameters from their text fields
         self.sel = 0
         self.mode = self.dataMode.currentIndex()
         self.thresh = _safe_float(self.threshold.text())
@@ -333,6 +339,8 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.nx = int(self.xSize.currentText())
         self.ny = int(self.ySize.currentText())
         self.zeroC = int(self.zc.text())
+
+        # check for invalid parameters
         if self.delay < 0:
             self.setup = 0
             self.popup = PopupWindow("Error", "Invalid delay value.")
@@ -369,6 +377,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
             self.popup.exec()
             return
         
+        # get the x and y propagation constants
         self.xprop = _safe_float(self.kxVal.text())
         self.yprop = _safe_float(self.kyVal.text())
         self.kx = self.calc_k(self.xprop, self.fs)
@@ -386,15 +395,18 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.setup = 1
         self.open_popup()
 
+    # helper function for propagation constant calculations
     def calc_k(self, v_prop_mm_ns, fs_ghz):
         return v_prop_mm_ns * 1000.0 / (2.0 * 1024.0 * fs_ghz)
 
+    # gets the user selected save folder
     def getFilePath(self):
         folder = QtWidgets.QFileDialog.getExistingDirectory(self, "Select Save Folder")
 
         if folder:
             self.save_folder = folder
 
+    # updates the status bar at the bottom of the GUI
     def _update_seconds_status(self):
         time = self.erPlot.times[-1] if self.erPlot.times and self.erPlot.running else 0
         time = int(time)
@@ -406,12 +418,14 @@ class EtherDAQMock(QtWidgets.QMainWindow):
                 return
         self.secondsStatusLbl.setText(f"Seconds: {time}")
 
+    # function is called on every batch acquisition and checks to see if the acquisition needs to be stopped
     def eventsStatus(self):
         count = np.sum(self.erPlot.rates) if self.erPlot.rates and self.erPlot.running else 0
         self.detEventsLbl.setText(f"Det Events: {count}")
         if self.acqType.currentIndex() == 1 and count > self.acqLen.value():
             self.stop_acquire()    
 
+    # this function updates the PHD and hitmap plots with the received batch of event data
     def updatePlots(self, img, x, y, hist, count):
         if self.rtImageChk.isChecked():
             self.hitmap.set_image(img, x, y)
@@ -420,11 +434,13 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.erPlot.addEvents(count)
         self.eventsStatus()
 
+    # This function checks to see if the running event rate box is checked and performs the appropriate action
     def erControl(self, check):
         self.erPlot.running = check
         if not check:
             self.erPlot.stop(False)
 
+    # the function is called when the acquire button is pressed
     def start_acquire(self):
         if self.setup:
             self.mode = self.dataMode.currentIndex()
@@ -432,7 +448,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
             self.setupThreads()
             self.phdPlot.clear()
             self.hitmap.clear()
-
+            # updates the buttons and changeable fields to not be enabled
             self.fileBtn.setEnabled(False)
             self.ParamsBtn.setEnabled(False)
             self.acquireBtn.setEnabled(False)
@@ -443,6 +459,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
             self.acqType.setEnabled(False)
             self.statusBar().showMessage("Acquiring...", 2000)
 
+            # starts the plots
             if self.mode < 2:
                 self.phdPlot.start()
                 self.erPlot.start()
@@ -450,6 +467,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         else:
             self.paramError()
     
+
     @pyqtSlot(object)
     def Estimate(self, pulse):
         start = False
@@ -475,6 +493,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.popup.exec()
         self.stop_acquire()
 
+    # this function sets up the thread architecture for the GUI
     def setupThreads(self):
 
         # create the writer and tx individual threads
@@ -534,7 +553,9 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         # connect the done signal from the receiver to the function that stops all workers and threads to ensure the socket is closed properly
         self.recv_worker.done.connect(self.cleanUp)
 
+    # function is called when the system is stopping acquisition
     def stop_acquire(self):
+        # reenable the buttons and fields
         self.timer.stop()
         self.erPlot.stop(True)
         self.phdPlot.stop()
@@ -588,6 +609,7 @@ class EtherDAQMock(QtWidgets.QMainWindow):
         self.popup = PopupWindow("Error", "Set parameters first.")
         self.popup.exec()
 
+# class is used to create a popup window with text
 class PopupWindow(QDialog):
     def __init__(self, title, msg):
         super().__init__()

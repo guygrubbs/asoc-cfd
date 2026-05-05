@@ -6,7 +6,10 @@ import time
 import pyqtgraph as pg
 from PyQt5.QtGui import QTransform
 
+
+# This class creates and updates the hitmap on the main window of the GUI
 class HeatmapWidget(QtWidgets.QWidget):
+    # init function creates the plot
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -41,9 +44,9 @@ class HeatmapWidget(QtWidgets.QWidget):
 
         self.img.setLevels((0, 10))
 
-
+    # function takes in an image with a new batch of data and adds it to the current hitmap image on the screen
     def set_image(self, image, x, y, factor=1):
-
+        
         self.factor = factor
         sx = x / image.shape[1]
         sy = y / image.shape[0]
@@ -56,27 +59,22 @@ class HeatmapWidget(QtWidgets.QWidget):
         t.translate(-image.shape[1] / 2, -image.shape[0] / 2)
         self.img.setTransform(t)
 
+    # makes the hitmap update the scale automatically
     def auto_levels(self):
         self.img.setImage(self.img.image, autoLevels=True)
 
+    # function sets the levels of the hitmap
     def set_levels(self, vmin, vmax):
         self.img.setLevels((vmin, vmax))
 
+    # function clears the graph
     def clear(self):
         if self.img.image is not None:
             self.img.setImage(np.zeros_like(self.img.image), autoLevels=False)
 
-    def hasHeightForWidth(self):
-       return True
-
-    def heightForWidth(self, width):
-        return width
-
-    def resizeEvent(self, event):
-        side = min(self.width(), self.height())
-        self.resize(side, side)
-
+# this class creates and updates a pulse height distribution plot on the main tab of the GUI
 class PHDWidget(QtWidgets.QWidget):
+    # function sets up the PHD with the specified number of bins
     def __init__(self, bins = 256, parent = None):
         super().__init__(parent)
         self.bins = bins
@@ -102,17 +100,20 @@ class PHDWidget(QtWidgets.QWidget):
         self.plot.setYRange(0, self.ymax)
         vb = self.plot.getViewBox()
         vb.setMenuEnabled(False)
-
+    
+    # starts the plot
     def start(self):
         vb = self.plot.getViewBox()
         vb.setMenuEnabled(False)
         vb.setMouseEnabled(x = False, y = False)
     
+    # stops the plot
     def stop(self):
         vb = self.plot.getViewBox()
         vb.setMenuEnabled(True)
         vb.setMouseEnabled(x = True, y = True)
 
+    # updates the plot with the new batch of bin distributions received
     def updatePlot(self, batch):
         self.hist += batch
         self.bar.setOpts(height = self.hist)
@@ -122,13 +123,16 @@ class PHDWidget(QtWidgets.QWidget):
             self.ymax = ymax
             self.plot.setYRange(0, int(ymax * 1.1))
 
+    # clears the plot
     def clear(self):
         self.hist[:] = 0
         self.ymax = 25
         self.plot.setYRange(0, int(self.ymax * 1.1))
         self.bar.setOpts(height = self.hist)
 
+# this class creates and plots the running event rate on the main window of the GUI
 class EventRateWidget(QtWidgets.QWidget):
+    # set up the plot
     def __init__(self, window = 10, parent = None):
         super().__init__(parent)
 
@@ -163,6 +167,8 @@ class EventRateWidget(QtWidgets.QWidget):
         self.timer.timeout.connect(self.update)
         self.running = False
     
+
+    # starts the plot
     def start(self):
         self.running = True
         self.clear()
@@ -172,7 +178,7 @@ class EventRateWidget(QtWidgets.QWidget):
         vb.setMenuEnabled(False)
         vb.setMouseEnabled(x = False, y = False)
 
-
+    # clears the display
     def clear(self):
         self.count = 0
         self.times = []
@@ -180,6 +186,7 @@ class EventRateWidget(QtWidgets.QWidget):
         self.plot.getViewBox().setYRange(0, 1)
         self.plot.getViewBox().setXRange(0, self.window)
 
+    # stops the plot
     def stop(self, stopAcq):
         if stopAcq:
             self.timer.stop()
@@ -189,6 +196,7 @@ class EventRateWidget(QtWidgets.QWidget):
         self.curve.setData(self.times, self.rates)
         self.running = stopAcq
     
+    # updates the plot every second
     def update(self):
         now = time.time() - self.startTime
         rate = self.count
@@ -214,5 +222,6 @@ class EventRateWidget(QtWidgets.QWidget):
             self.plot.getViewBox().setYRange(ymin // 1.1, ymax * 1.1, padding = 0)
             self.plot.getViewBox().setXRange(times[0], times[-1] if len(times) == self.window else self.window)
 
+    # adds events to the total number of processed events
     def addEvents(self, counts):
         self.count += counts

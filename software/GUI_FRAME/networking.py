@@ -13,6 +13,7 @@ DEBUG = 0
 PORT = 'COM4'
 BR = 115200
 
+# function converts numbers from fixed to floating point representation
 def fixed_to_float(num, Qint, Qfrac, sgn):
     len = Qint + Qfrac + (1 if sgn else 0)
 
@@ -25,6 +26,7 @@ def fixed_to_float(num, Qint, Qfrac, sgn):
     Q = 1 << Qfrac
     return float(num) / float(Q)
 
+# function converts numbers from float to fixed point representation
 def float_to_fixed(num, Qint, Qfrac, sgn):
     Q = 1 << Qfrac
     val = qRound(num * Q)
@@ -39,13 +41,15 @@ def float_to_fixed(num, Qint, Qfrac, sgn):
     val = max(min_val, min(max_val, val))
     return val
 
+# helper function for rounding
 def qRound(num):
     return int(np.floor(num + 0.5)) if num >= 0 else int(np.ceil(num - 0.5))
 
 
+# class handles the reception of 18 byte packets from the FPGA, as well as sending start and stop packets
 class RxWorker(QtCore.QObject):
     done = QtCore.pyqtSignal()
-    
+    # setup the worker
     def __init__(self, q, com, br=9600):
         super().__init__()
         self.com = com
@@ -61,6 +65,7 @@ class RxWorker(QtCore.QObject):
         self.count = None
         self.thread = None
 
+    # starts the worker
     @QtCore.pyqtSlot()
     def start(self, frac, delay, thresh, zc, kx, ky, mode):
         self.running = True
@@ -69,14 +74,18 @@ class RxWorker(QtCore.QObject):
         self.count = 0
         self.ser = serial.Serial(port=self.com, baudrate=self.baudRate)
         self.mode = mode
+        # send the start packet
         self.sendStartStop(frac, delay, thresh, zc, kx, ky, mode, 1)
 
         self.thread = threading.Thread(target = self.recvLoop, daemon=True)
         self.thread.start()
 
+    # loop to receive bytes as they come in
     def recvLoop(self):
+        # while the worker is active
         while self.running:
             try:
+                # get 18 bytes of data and put it in the queue
                 data = self.ser.read(self.pack_len)
                 if len(data) == self.pack_len:
                     try:
@@ -91,12 +100,14 @@ class RxWorker(QtCore.QObject):
                 print(f"Error: {e}")
                 break
     
+    # stops the worker
     @QtCore.pyqtSlot()
     def stop(self):
         if not self.running:
             return
         
         self.running = False
+        # send stop signal to fpga
         self.sendStartStop(0, 0, 0, 0, 0, 0, self.mode, 0)
         
         if self.ser:
@@ -117,6 +128,7 @@ class RxWorker(QtCore.QObject):
         if DEBUG:
             print("\nRx Disconnected successfully")
     
+    # function formats and sends the start/stop packet, for the stop packet all fields are 0
     @QtCore.pyqtSlot(int, int, int, int, int, float, float)
     def sendStartStop(self, frac, delay, thresh, zc, kx, ky, mode, s):
         t = time.time_ns() // 1000
@@ -146,10 +158,13 @@ class RxWorker(QtCore.QObject):
             print(f"Start packet: {packBytes.hex(' ')}")
         if s == 0 and DEBUG:
             print(f"Stop packet: {packBytes.hex(' ')}")
+
+# class is responsible for reading the 18 byte packets from RXWorker and decoding them into their respective variables
 class DecWorker(QtCore.QObject):
     batch_ready = QtCore.pyqtSignal(object)
     pulse = QtCore.pyqtSignal(object)
 
+    # sets up the worker
     def __init__(self, q, type, mode):
         super().__init__()
         self.mode = mode
@@ -161,30 +176,34 @@ class DecWorker(QtCore.QObject):
         self.inType = type
         self.packetType = np.dtype([ ('type', '>u2'), ('valid', '>u2'), ('mag', '>f4'), ('t', '>f8'), ('x', '>f4'), ('y', '>f4')])
     
+    # starts the worker
     def start(self):
         self.running = True
         self.thread = threading.Thread(target=self.decodeLoop, daemon=True)
         self.thread.start()
 
+    # main thread loop where the packets are deoced
     def decodeLoop(self):
         lBuffer = []
         refTime = time.time()
 
+        # while the worker is active
         while self.running:
             try:
+                # get the bytes from the queue
                 data = self.queue.get(timeout = 0.01)
             except queue.Empty:
                 data = None
 
             if data is not None and self.mode < 2:
                 print(data.hex(' ').upper())
-
+                # decode the data into time, x position, y position, and pulse height
                 t   = int.from_bytes(data[0:8],  byteorder='big', signed=False)
                 x   = int.from_bytes(data[8:12],  byteorder='big', signed=True)
                 y   = int.from_bytes(data[12:16], byteorder='big', signed=True)
                 mag = int.from_bytes(data[16:18], byteorder='big', signed=True)
 
-
+                # append the decoded data into a buffer
                 lBuffer.append((x, y, t, mag))
                 if DEBUG:
                     print(f"Raw Hex: {data.hex(' ').upper()}")
@@ -196,6 +215,7 @@ class DecWorker(QtCore.QObject):
                 arr = np.frombuffer(data[1:], dtype=np.float64)
                 self.pulse.emit(arr)
         
+            # emit the processed event data in batches
             if (lBuffer and (time.time() - refTime) >= self.refresh) or len(lBuffer) >= self.batch_size:
                 batch = np.array(lBuffer, dtype = self.inType)
                 lBuffer.clear()
@@ -205,6 +225,7 @@ class DecWorker(QtCore.QObject):
             batch = np.array(lBuffer, dtype = self.inType)
             self.batch_ready.emit(batch)
     
+    # function stops the worker
     def stop(self):
         self.running = False
 
