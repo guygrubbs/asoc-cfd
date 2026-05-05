@@ -60,11 +60,8 @@ module timestamp_generator #(
     reg [DIV_W-1:0] div_cnt;
     reg             us_tick;
 
-    // -------------------------------------------------------------------------
     // Microsecond tick: pulses for one clock every CLKS_PER_US clocks.
-    // The divider also restarts on set_time_valid so the first tick after a
-    // host load arrives exactly 1 us later.
-    // -------------------------------------------------------------------------
+    // The divider also restarts on set_time_valid so the first tick after a host load arrives exactly 1 us later.
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             div_cnt <= {DIV_W{1'b0}};
@@ -81,10 +78,8 @@ module timestamp_generator #(
         end
     end
 
-    // -------------------------------------------------------------------------
     // 64-bit loadable microsecond counter.
     // Priority: load (set_time_valid) > increment (us_tick).
-    // -------------------------------------------------------------------------
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             timestamp <= 64'd0;

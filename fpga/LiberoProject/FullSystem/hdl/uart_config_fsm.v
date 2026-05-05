@@ -1,64 +1,75 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////
-// uart_config_fsm.v
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Company: SwRI/VT
 //
-// FSM that accepts a 149-bit packed word (already assembled by the UART
-// module) and latches it into individual DSP-pipeline configuration registers.
+// File: uart_config_fsm.v
+// File history:
 //
-// Packed bit layout (bit 148 is MSB, received first):
+//
+// Description:
+//
+// FSM that accepts a 151-bit packed word (already assembled by the UART module) and
+// latches it into individual DSP-pipeline configuration registers.
+//
+// Packed bit layout (bit 150 is MSB, received first):
 //
 //  Bits        Width  Field
 //  ---------   -----  --------------------------------------------------
-//  [148:135]    14    Attenuation    ? Q0.13 signed
-//  [134:128]     7    Delay          ? Unsigned integer (1?127)
-//  [127:112]    16    Threshold      ? SQ12.3 signed
-//  [111:104]     8    ZC Neg Samples ? Unsigned integer
-//  [103: 84]    20    Kx             ? UQ1.19 unsigned
-//  [ 83: 64]    20    Ky             ? UQ1.19 unsigned
-//  [ 63:  0]    64    Timestamp      ? 64-bit unsigned
+//  [150]         1    start_stop     - acquisition gate (1 = run)
+//  [149]         1    sel            - mode/source select
+//  [148:135]    14    Attenuation    - Q0.13 signed
+//  [134:128]     7    Delay          - Unsigned integer (1-127)
+//  [127:112]    16    Threshold      - SQ12.3 signed
+//  [111:104]     8    ZC Neg Samples - Unsigned integer
+//  [103: 84]    20    Kx             - UQ1.19 unsigned
+//  [ 83: 64]    20    Ky             - UQ1.19 unsigned
+//  [ 63:  0]    64    Timestamp      - 64-bit unsigned
 //  ---------   -----  --------------------------------------------------
-//                149 bits total
+//                151 bits total
 //
 // Operation:
-//   1. IDLE   ? waits for rx_valid (indicates the 149-bit word is ready)
-//   2. LATCH  ? slices the packed word into individual registers
-//   3. DONE   ? asserts cfg_valid for one cycle, then returns to IDLE
+//   1. S_IDLE   - waits for rx_valid (indicates the 151-bit word is ready)
+//   2. S_LATCH  - slices the packed word into individual registers
+//   3. S_DONE   - asserts cfg_valid for one cycle, then returns to S_IDLE
 //
-//////////////////////////////////////////////////////////////////////////////
+// Latency: 2 cycles from rx_valid to cfg_valid.
+//
+// Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
+// Author: VT MDE S26-23
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+`timescale 1ns / 1ps
 
 module uart_config_fsm (
     input  wire          clk,
     input  wire          rst,
 
-    // Packed input from UART assembler
+    // packed input from UART assembler, valid on a pulse of rx_valid
     input  wire [150:0]  rx_packed,
-    input  wire          rx_valid,    // single-cycle pulse: rx_packed is valid
+    input  wire          rx_valid,        // single-cycle pulse: rx_packed is valid
 
-    // DSP parameter outputs
-    output reg  [13:0]   attenuation,    // Q0.13 signed
-    output reg  [ 6:0]   delay,          // unsigned, 1?127
-    output reg  [15:0]   threshold,      // SQ12.3 signed
-    output reg  [ 7:0]   zc_neg_samples, // unsigned
-    output reg  [19:0]   kx,             // UQ1.19 unsigned
-    output reg  [19:0]   ky,             // UQ1.19 unsigned
-    output reg  [63:0]   timestamp,      // 64-bit unsigned
-    output reg           sel,
-    output reg           start_stop,
-    output reg           cfg_valid
+    // DSP parameter outputs, all updated together on cfg_valid
+    output reg  [13:0]   attenuation,     // Q0.13 signed
+    output reg  [ 6:0]   delay,           // unsigned, 1-127
+    output reg  [15:0]   threshold,       // SQ12.3 signed
+    output reg  [ 7:0]   zc_neg_samples,  // unsigned
+    output reg  [19:0]   kx,              // UQ1.19 unsigned
+    output reg  [19:0]   ky,              // UQ1.19 unsigned
+    output reg  [63:0]   timestamp,       // 64-bit unsigned
+    output reg           sel,             // mode/source select
+    output reg           start_stop,      // acquisition gate (drives `acquire` downstream)
+    output reg           cfg_valid        // one-cycle strobe: outputs above are fresh
 );
 
-    // -----------------------------------------------------------------------
-    // State encoding
-    // -----------------------------------------------------------------------
-    localparam [1:0] S_IDLE  = 2'b00,
-                     S_LATCH = 2'b01,
-                     S_DONE  = 2'b10;
+    // FSM states
+    localparam [1:0] S_IDLE  = 2'b00,   // waiting for a new packed word
+                     S_LATCH = 2'b01,   // slicing rx_packed into config registers
+                     S_DONE  = 2'b10;   // asserting cfg_valid for one cycle
 
     reg [1:0] state, state_next;
 
-    // -----------------------------------------------------------------------
-    // State register
-    // -----------------------------------------------------------------------
+
+    // state register
     always @(posedge clk or posedge rst) begin
         if (rst)
             state <= S_IDLE;
@@ -66,9 +77,8 @@ module uart_config_fsm (
             state <= state_next;
     end
 
-    // -----------------------------------------------------------------------
-    // Next-state logic
-    // -----------------------------------------------------------------------
+
+    // next-state logic: linear walk through IDLE -> LATCH -> DONE -> IDLE
     always @(*) begin
         state_next = state;
         case (state)
@@ -79,11 +89,11 @@ module uart_config_fsm (
         endcase
     end
 
-    // -----------------------------------------------------------------------
-    // Output / datapath logic
-    // -----------------------------------------------------------------------
+
+    // output / datapath logic
     always @(posedge clk or posedge rst) begin
         if (rst) begin
+            // reset values to 0 on reset
             sel            <= 1'b0;
             start_stop     <= 1'b0;
             attenuation    <= 14'd0;
@@ -95,11 +105,15 @@ module uart_config_fsm (
             timestamp      <= 64'd0;
             cfg_valid      <=  1'b0;
         end else begin
-            cfg_valid <= 1'b0;  // default: deassert
+            // default: cfg_valid is a one-cycle strobe, so deassert every cycle
+            // and let S_DONE pulse it high
+            cfg_valid <= 1'b0;
 
             case (state)
                 S_LATCH: begin
-                    start_stop     <= rx_packed[150];                    
+                    // slice the packed word into named config registers
+                    // (see bit layout table in the file header)
+                    start_stop     <= rx_packed[150];
                     sel            <= rx_packed[149];
                     attenuation    <= rx_packed[148:135];
                     delay          <= rx_packed[134:128];
@@ -111,10 +125,12 @@ module uart_config_fsm (
                 end
 
                 S_DONE: begin
+                    // pulse cfg_valid for one cycle so the downstream pipeline
+                    // sees all outputs update atomically
                     cfg_valid <= 1'b1;
                 end
 
-                default: ;  // S_IDLE ? hold values
+                default: ;  // S_IDLE - hold previously latched values
             endcase
         end
     end
