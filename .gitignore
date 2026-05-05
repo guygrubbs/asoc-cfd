@@ -1,10 +1,10 @@
 # Libero project generated folders
-designer/
-impl*/
-component/
-stimulus/
-simulation/
-synthesis/
+fpga/LiberoProject/FullSystem/designer/
+fpga/LiberoProject/FullSystem/impl*/
+fpga/LiberoProject/FullSystem/component/
+fpga/LiberoProject/FullSystem/stimulus/
+fpga/LiberoProject/FullSystem/simulation/
+fpga/LiberoProject/FullSystem/synthesis/
 
 # Logs and reports
 *.log
