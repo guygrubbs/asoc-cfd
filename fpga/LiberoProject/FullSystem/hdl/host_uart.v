@@ -32,7 +32,7 @@
 //
 //    Neither RX nor TX path depends on the other : they run concurrently.
 //
-//    Submodules: uart_rx and uart_tx (replaces earlier receiver/transmitter pair).
+//    Submodules: uart_rx and uart_tx
 //
 // Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
 // Author: VT MDE S26-23

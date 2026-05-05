@@ -30,7 +30,7 @@ KEY VendorTechnology_VCCI_1.8_VOLTR "COM"
 KEY VendorTechnology_VCCI_2.5_VOLTR "COM"
 KEY VendorTechnology_VCCI_3.3_VOLTR "COM"
 KEY VendorTechnology_VOLTR "COM"
-KEY ProjectLocation "C:\Users\aamar\Documents\SeniorSem2\4806-MDE\FullSystem"
+KEY ProjectLocation "C:\Users\aamar\Documents\SeniorSem2\4806-MDE\asoc-cfd\asoc-cfd\fpga\LiberoProject\FullSystem"
 KEY ProjectDescription ""
 KEY Pa4PeripheralNewSeq "GOOD"
 KEY SimulationType "VERILOG"
@@ -47,7 +47,7 @@ TIME="1777758360"
 SIZE="236"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top.adb,adb"
-STATE="utd"
+STATE="ood"
 TIME="1777841214"
 SIZE="13667840"
 ENDFILE
@@ -57,17 +57,17 @@ TIME="1777841217"
 SIZE="1044"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top.pdb,pdb"
-STATE="utd"
+STATE="ood"
 TIME="1777759530"
 SIZE="665318"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_ba.sdf,ba_sdf"
-STATE="utd"
+STATE="ood"
 TIME="1777759494"
 SIZE="13543940"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_ba.v,ba_hdl"
-STATE="utd"
+STATE="ood"
 TIME="1777759492"
 SIZE="7143588"
 ENDFILE
@@ -78,8 +78,8 @@ SIZE="22322"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_fp\fullsystem_top.pro,pro"
 STATE="utd"
-TIME="1777759800"
-SIZE="2503"
+TIME="1777992650"
+SIZE="2581"
 ENDFILE
 VALUE "<project>\designer\impl1\fullsystem_top_fp\projectData\fullsystem_top.pdb,pdb"
 STATE="utd"
@@ -118,8 +118,8 @@ SIZE="9024"
 ENDFILE
 VALUE "<project>\hdl\event_buffer.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="5681"
+TIME="1777999364"
+SIZE="6970"
 ENDFILE
 VALUE "<project>\hdl\event_builder.v,hdl"
 STATE="utd"
@@ -128,23 +128,23 @@ SIZE="11692"
 ENDFILE
 VALUE "<project>\hdl\fullsystem_top.v,hdl"
 STATE="utd"
-TIME="1777758359"
+TIME="1777921719"
 SIZE="14712"
 ENDFILE
 VALUE "<project>\hdl\host_uart.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="7983"
+TIME="1777999457"
+SIZE="8040"
 ENDFILE
 VALUE "<project>\hdl\mux_gain_test.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="2113"
+TIME="1777999281"
+SIZE="2154"
 ENDFILE
-VALUE "<project>\hdl\pattern_gen.v,hdl"
+VALUE "<project>\hdl\pattern_generator.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="13722"
+TIME="1777999616"
+SIZE="13728"
 ENDFILE
 VALUE "<project>\hdl\peak_detector_4ch.v,hdl"
 STATE="utd"
@@ -158,8 +158,8 @@ SIZE="8984"
 ENDFILE
 VALUE "<project>\hdl\pulse_extender.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="1867"
+TIME="1777999315"
+SIZE="1730"
 ENDFILE
 VALUE "<project>\hdl\serial_frac_div.v,hdl"
 STATE="utd"
@@ -168,8 +168,8 @@ SIZE="3199"
 ENDFILE
 VALUE "<project>\hdl\timestamp_generator.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="3470"
+TIME="1777999557"
+SIZE="3525"
 ENDFILE
 VALUE "<project>\hdl\uart_config_fsm.v,hdl"
 STATE="utd"
@@ -183,13 +183,13 @@ SIZE="7425"
 ENDFILE
 VALUE "<project>\hdl\uart_rx.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="6099"
+TIME="1777999255"
+SIZE="5032"
 ENDFILE
 VALUE "<project>\hdl\uart_tx.v,hdl"
 STATE="utd"
-TIME="1777758359"
-SIZE="4020"
+TIME="1777999464"
+SIZE="4044"
 ENDFILE
 VALUE "<project>\smartgen\mult_16x14_3p\mult_16x14_3p.cxf,actgen_cxf"
 STATE="utd"
@@ -218,7 +218,7 @@ PARENT="<project>\smartgen\mult_16x14_3p\mult_16x14_3p.cxf"
 IS_READONLY="TRUE"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top.edn,syn_edn"
-STATE="utd"
+STATE="ood"
 TIME="1777758661"
 SIZE="10108126"
 ENDFILE
@@ -228,40 +228,19 @@ TIME="1777758661"
 SIZE="264"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top_sdc.sdc,syn_sdc"
-STATE="utd"
+STATE="ood"
 TIME="1777758660"
 SIZE="407"
 ENDFILE
 VALUE "<project>\synthesis\fullsystem_top_syn.prj,prj"
 STATE="utd"
-TIME="1777758662"
-SIZE="4095"
+TIME="1777992650"
+SIZE="4693"
 ENDFILE
 ENDLIST
 LIST UsedFile
 ENDLIST
 LIST NewModulesInfo
-LIST "fullsystem_top::work"
-FILE "<project>\hdl\fullsystem_top.v,hdl"
-LIST ProjectState5.1
-LIST Impl1
-LiberoState=Post_Layout
-ideDESIGNER(<project>\designer\impl1\fullsystem_top.adb,adb)=StateSuccess
-ideSYNTHESIS(<project>\synthesis\fullsystem_top.edn,syn_edn)=StateSuccess
-LIST FlowOptions
-UsePhySynth=FALSE
-UseSynth=TRUE
-UseFhbAutoInst=FALSE
-ENDLIST
-Used_File_List
-ENDUsed_File_List
-ENDLIST
-ENDLIST
-LIST PinReports
-VALUE "<project>\designer\impl1\fullsystem_top_report_pin_byname.txt,log"
-VALUE "<project>\designer\impl1\fullsystem_top_report_pin_bynumber.txt,log"
-ENDLIST
-ENDLIST
 ENDLIST
 LIST AssociatedStimulus
 ENDLIST
@@ -367,20 +346,6 @@ IS32BIT="1"
 EndProfile
 ENDLIST
 LIST ProjectState5.1
-LIST "fullsystem_top::work"
-LIST Impl1
-LiberoState=Post_Layout
-ideDESIGNER(<project>\designer\impl1\fullsystem_top.adb,adb)=StateSuccess
-ideSYNTHESIS(<project>\synthesis\fullsystem_top.edn,syn_edn)=StateSuccess
-LIST FlowOptions
-UsePhySynth=FALSE
-UseSynth=TRUE
-UseFhbAutoInst=FALSE
-ENDLIST
-Used_File_List
-ENDUsed_File_List
-ENDLIST
-ENDLIST
 ENDLIST
 LIST ExcludePackageForSimulation
 ENDLIST
@@ -394,8 +359,11 @@ LIST UserCustomizedFileList
 ENDLIST
 LIST OpenedFileList
 ORIENTATION;HORIZONTAL
-StartPage;StartPage;0
-ACTIVEVIEW;StartPage
+HDL;hdl\timestamp_generator.v;0
+HDL;hdl\uart_config_fsm.v;0
+HDL;hdl\pulse_extender.v;0
+HDL;hdl\pattern_generator.v;0
+ACTIVEVIEW;hdl\pattern_generator.v
 ENDLIST
 LIST ModuleSubBlockList
 LIST "adc_preprocess_4ch::work","hdl\adc_preprocess_4ch.v","FALSE","FALSE"
@@ -429,7 +397,7 @@ SUBBLOCK "dsp_pipeline::work","hdl\dsp_pipeline.v","FALSE","FALSE"
 SUBBLOCK "event_buffer::work","hdl\event_buffer.v","FALSE","FALSE"
 SUBBLOCK "host_uart::work","hdl\host_uart.v","FALSE","FALSE"
 SUBBLOCK "mux_gain_test::work","hdl\mux_gain_test.v","FALSE","FALSE"
-SUBBLOCK "pattern_generator::work","hdl\pattern_gen.v","FALSE","FALSE"
+SUBBLOCK "pattern_generator::work","hdl\pattern_generator.v","FALSE","FALSE"
 SUBBLOCK "pulse_extender::work","hdl\pulse_extender.v","FALSE","FALSE"
 SUBBLOCK "timestamp_generator::work","hdl\timestamp_generator.v","FALSE","FALSE"
 SUBBLOCK "uart_config_fsm::work","hdl\uart_config_fsm.v","FALSE","FALSE"
@@ -444,7 +412,7 @@ LIST "mult_16x14_3p::work","smartgen\mult_16x14_3p\mult_16x14_3p.v","TRUE","FALS
 ENDLIST
 LIST "mux_gain_test::work","hdl\mux_gain_test.v","FALSE","FALSE"
 ENDLIST
-LIST "pattern_generator::work","hdl\pattern_gen.v","FALSE","FALSE"
+LIST "pattern_generator::work","hdl\pattern_generator.v","FALSE","FALSE"
 ENDLIST
 LIST "peak_detector_4ch::work","hdl\peak_detector_4ch.v","FALSE","FALSE"
 ENDLIST

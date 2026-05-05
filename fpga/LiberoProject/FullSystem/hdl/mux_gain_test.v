@@ -13,6 +13,7 @@
 //   symmetry with other event-stream blocks but are unused.
 //
 // Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
+// Author: VT MDE S26-23
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

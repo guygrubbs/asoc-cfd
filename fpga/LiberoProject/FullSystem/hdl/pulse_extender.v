@@ -3,9 +3,7 @@
 //
 // File: pulse_extender.v
 // File history:
-//      <Revision number>: <Date>: <Comments>
-//      <Revision number>: <Date>: <Comments>
-//      <Revision number>: <Date>: <Comments>
+//
 //
 // Description: 
 //

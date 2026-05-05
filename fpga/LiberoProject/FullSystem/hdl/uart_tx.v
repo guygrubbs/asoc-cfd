@@ -8,7 +8,7 @@
 // UART protocol (1 start bit, 8 data bits, 1 stop bit). Transmission is initiated
 // by a single-cycle data valid pulse.
 //
-// Targeted device: ProASIC3E (A3PE1500, 208 PQFP)
+// Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
 // Author: VT MDE S26-23
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

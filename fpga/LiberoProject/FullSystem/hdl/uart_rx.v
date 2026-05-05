@@ -8,7 +8,7 @@
 // (1 start bit, 8 data bits, 1 stop bit). Samples incoming data at the midpoint
 // of each bit period and outputs a valid pulse when a full byte is received.
 //
-// Targeted device: ProASIC3E (A3PE1500, 208 PQFP)
+// Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
 // Author: VT MDE S26-23
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -27,9 +27,8 @@ module uart_rx
     output reg [7:0]  o_rx_byte    // received byte
 );
 
-    //========================================================
+
     // Synchronizer for asynchronous UART input
-    //========================================================
     reg r_rx_meta;
     reg r_rx_sync;
 
@@ -43,9 +42,7 @@ module uart_rx
         end
     end
 
-    //========================================================
     // State encoding
-    //========================================================
     localparam [2:0] S_IDLE      = 3'd0;
     localparam [2:0] S_RX_START  = 3'd1;
     localparam [2:0] S_RX_DATA   = 3'd2;
@@ -57,9 +54,7 @@ module uart_rx
     reg [2:0]  r_bit_index;
     reg [7:0]  r_rx_byte;
 
-    //========================================================
     // UART RX FSM
-    //========================================================
     always @(posedge i_clk or posedge i_rst) begin
         if (i_rst) begin
             r_state     <= S_IDLE;
@@ -74,10 +69,8 @@ module uart_rx
 
             case (r_state)
 
-                //================================================
                 // Wait for line to go low = start bit
                 // UART line sits high when idle
-                //================================================
                 S_IDLE: begin
                     r_clk_count <= 16'd0;
                     r_bit_index <= 3'd0;
@@ -88,10 +81,7 @@ module uart_rx
                         r_state <= S_IDLE;
                 end
 
-                //================================================
-                // Move to middle of start bit and confirm it is
-                // still low. This rejects glitches/noise.
-                //================================================
+                // Move to middle of start bit and confirm it is still low. This rejects glitches/noise.
                 S_RX_START: begin
                     if (r_clk_count == (CLKS_PER_BIT-1)/2) begin
                         if (r_rx_sync == 1'b0) begin
@@ -107,10 +97,7 @@ module uart_rx
                     end
                 end
 
-                //================================================
-                // Sample each data bit in the middle of the bit
-                // period. UART sends LSB first.
-                //================================================
+                // Sample each data bit in the middle of the bit period. UART sends LSB first.
                 S_RX_DATA: begin
                     if (r_clk_count < CLKS_PER_BIT-1) begin
                         r_clk_count <= r_clk_count + 16'd1;
@@ -130,10 +117,7 @@ module uart_rx
                     end
                 end
 
-                //================================================
-                // Sample stop bit. For a valid UART frame, stop
-                // bit should be high.
-                //================================================
+                // Sample stop bit. For a valid UART frame, stop bit should be high.
                 S_RX_STOP: begin
                     if (r_clk_count < CLKS_PER_BIT-1) begin
                         r_clk_count <= r_clk_count + 16'd1;
@@ -146,9 +130,7 @@ module uart_rx
                     end
                 end
 
-                //================================================
                 // Single-cycle cleanup state
-                //================================================
                 S_CLEANUP: begin
                     r_state <= S_IDLE;
                 end
