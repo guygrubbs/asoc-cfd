@@ -69,6 +69,7 @@ module host_uart #(
     wire       tx_dv;
     wire       tx_done;   // available but unused
 
+    // receiver module
     uart_rx #(.CLKS_PER_BIT(CLKS_PER_BIT)) u_uart_rx (
         .i_clk       (clk),
         .i_rst       (rst),
@@ -77,6 +78,7 @@ module host_uart #(
         .o_rx_byte   (rx_byte)
     );
 
+    // transmitter module
     uart_tx #(.CLKS_PER_BIT(CLKS_PER_BIT)) u_uart_tx (
         .i_clk       (clk),
         .i_rst       (rst),
@@ -108,12 +110,14 @@ module host_uart #(
             for (rx_init_i = 0; rx_init_i < 19; rx_init_i = rx_init_i + 1)
                 rx_buf[rx_init_i] <= 8'h00;
         end else begin
+            // deassert valid every cycle for a single cycle valid pulse
             data_out_valid <= 1'b0;
 
             case (rx_state)
 
                 RXS_RECV: begin
                     if (rx_dv) begin
+                        // capture byte from receiver
                         rx_buf[rx_idx] <= rx_byte;
                         if (rx_idx == 5'd18) begin
                             rx_idx   <= 5'd0;
@@ -132,6 +136,7 @@ module host_uart #(
                                         rx_buf[8],      rx_buf[9],  rx_buf[10], rx_buf[11],
                                         rx_buf[12],     rx_buf[13], rx_buf[14], rx_buf[15],
                                         rx_buf[16],     rx_buf[17], rx_buf[18]};
+                    // single cycle valid pulse
                     data_out_valid <= 1'b1;
                     rx_state       <= RXS_RECV;
                 end
@@ -158,6 +163,7 @@ module host_uart #(
     integer tx_init_i;
 
     assign tx_byte = tx_buf[tx_idx];
+    // don't send while TX is currently sending data
     assign tx_dv   = (tx_state == TXS_SEND) && !tx_active;
 
     always @(posedge clk or posedge rst) begin
@@ -193,7 +199,7 @@ module host_uart #(
                         tx_state   <= TXS_LOAD;
                     end
                 end
-
+                // 1 cycle delay for stability
                 TXS_LOAD: begin
                     tx_state <= TXS_SEND;
                 end
@@ -206,6 +212,7 @@ module host_uart #(
                     end
                 end
 
+                // wait for tx to finish
                 TXS_WAIT_START: begin
                     if (tx_active) tx_state <= TXS_WAIT_END;
                 end

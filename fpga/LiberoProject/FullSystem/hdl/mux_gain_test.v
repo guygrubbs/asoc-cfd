@@ -6,11 +6,11 @@
 // Description:
 //   2:1 mux for the post-DSP / post-pattern-gen event stream. Selects between
 //   the DSP pipeline output and the pattern generator output based on `sel`:
-//     sel = 0 -> DSP outputs (out_*_dsp)
-//     sel = 1 -> Pattern generator outputs (out_*_test)
+//     sel = 0 -> DSP outputs
+//     sel = 1 -> Pattern generator outputs
 //
 //   Purely combinational. clk and rst are present in the port list for
-//   instantiation symmetry with other event-stream blocks but are unused.
+//   symmetry with other blocks but are unused.
 //
 // Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
 //

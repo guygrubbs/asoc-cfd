@@ -1,18 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Company: <Name>
+// Company: SWRI/VT
 //
 // File: uart_tx.v
-// File history:
-//      <Revision number>: <Date>: <Comments>
-//      <Revision number>: <Date>: <Comments>
-//      <Revision number>: <Date>: <Comments>
 //
 // Description: 
 //
-// <Description here>
+// Parameterized TX module for serial connection with a UART receiver. Baud rate is customized via
+// CLKS_PER_BIT parameter calculated based on desired baud rate and clock speed. Stays idle until
+// a data valid flag is present to begin transmission. Transmitter collects data into a buffer prior
+// to sending it out. The format of the data being sent out for this system is shown in host_uart.v
 //
 // Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
-// Author: <Name>
+// Author: VT MDE S26-23
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////// 
 
