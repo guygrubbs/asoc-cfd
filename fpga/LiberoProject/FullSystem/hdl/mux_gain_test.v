@@ -10,7 +10,7 @@
 //     sel = 1 -> Pattern generator outputs
 //
 //   Purely combinational. clk and rst are present in the port list for
-//   symmetry with other blocks but are unused.
+//   symmetry with other event-stream blocks but are unused.
 //
 // Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
 //
@@ -48,6 +48,7 @@ module mux_gain_test #(
     output wire [MAG_WIDTH-1:0]   out_mag
 );
 
+    // sel = 1, use test pattern. sel = 0, use DSP
     assign out_tag = sel ? out_tag_test : out_tag_dsp;
     assign out_x   = sel ? out_x_test   : out_x_dsp;
     assign out_y   = sel ? out_y_test   : out_y_dsp;

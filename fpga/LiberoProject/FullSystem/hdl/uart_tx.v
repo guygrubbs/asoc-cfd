@@ -1,19 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Company: SWRI/VT
+// Company: SWRI / VT
 //
 // File: uart_tx.v
 //
-// Description: 
+// Description:
+// UART transmitter module. Sends 8-bit data over a serial line using a standard
+// UART protocol (1 start bit, 8 data bits, 1 stop bit). Transmission is initiated
+// by a single-cycle data valid pulse.
 //
-// Parameterized TX module for serial connection with a UART receiver. Baud rate is customized via
-// CLKS_PER_BIT parameter calculated based on desired baud rate and clock speed. Stays idle until
-// a data valid flag is present to begin transmission. Transmitter collects data into a buffer prior
-// to sending it out. The format of the data being sent out for this system is shown in host_uart.v
-//
-// Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
+// Targeted device: ProASIC3E (A3PE1500, 208 PQFP)
 // Author: VT MDE S26-23
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 `timescale 1ns/1ps
 

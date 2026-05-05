@@ -1,19 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Company: SWRI/VT
+// Company: SWRI / VT
 //
 // File: uart_rx.v
 //
-// Description: 
-//      
-// Parameterized RX module for serial connection with a UART receiver. Baud rate is customized via
-// CLKS_PER_BIT parameter calculated based on desired baud rate and clock speed. Stays idle until
-// a synchronizer bit from the computer is flagged. Receiver collects data into a buffer. 
-// The format of the data being received for this system is shown in host_uart.v
+// Description:
+// UART receiver module. Receives serial data using a standard UART protocol
+// (1 start bit, 8 data bits, 1 stop bit). Samples incoming data at the midpoint
+// of each bit period and outputs a valid pulse when a full byte is received.
 //
-// Targeted device: <Family::ProASIC3E> <Die::A3PE1500> <Package::208 PQFP>
+// Targeted device: ProASIC3E (A3PE1500, 208 PQFP)
 // Author: VT MDE S26-23
-//
-/////////////////////////////////////////////////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 `timescale 1ns/1ps
 
