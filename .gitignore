@@ -9,7 +9,6 @@ fpga/LiberoProject/FullSystem/synthesis/
 # Logs and reports
 *.log
 *.rpt
-*.txt
 *.jou
 
 # Generated project files / metadata
