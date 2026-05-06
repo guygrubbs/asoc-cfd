@@ -362,8 +362,7 @@ ORIENTATION;HORIZONTAL
 Reports;Reports;0
 ReportsCurrentItem;Compile:fullsystem_top_compile_log.rpt
 HDL;hdl\fullsystem_top.v;0
-StartPage;StartPage;0
-ACTIVEVIEW;StartPage
+ACTIVEVIEW;hdl\fullsystem_top.v
 ENDLIST
 LIST ModuleSubBlockList
 LIST "adc_preprocess_4ch::work","hdl\adc_preprocess_4ch.v","FALSE","FALSE"
