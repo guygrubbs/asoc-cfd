@@ -32,7 +32,6 @@ fpga/LiberoProject/FullSystem/synthesis/
 # Programming / export outputs
 *.bit
 *.dat
-*.hex
 *.mcs
 *.job
 
